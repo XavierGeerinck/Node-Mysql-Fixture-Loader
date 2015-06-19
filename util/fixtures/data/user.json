@@ -1,0 +1,9 @@
+[
+    {
+        "id": 1,
+        "email": "test@test.be",
+        "password": "$2a$10$D151BsdIw6vA.LL8CG4m5uypDg.vUwyOTiJKiZOTpgoeXI2B53XjG",
+        "dateCreated": "0000-00-00",
+        "scope": "user"
+    }
+]

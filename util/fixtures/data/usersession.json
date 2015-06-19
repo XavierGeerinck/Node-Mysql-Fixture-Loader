@@ -1,0 +1,10 @@
+[
+    {
+        "id": 1,
+        "userId": "1",
+        "token": "57dcb1146af787f9cf10455b1b7323661a8b78410a0fe7c1589697e18465757f",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36",
+        "ip": "172.17.8.1",
+        "dateCreated": "0000-00-00"
+    }
+]
