@@ -40,23 +40,35 @@ Fixtures.prototype.load = function (params, callback) {
 
         // Insert all the elements, we construct an INSERT INTO based on the keys and the values
         // INSERT INT {table} SET ?
-        for (var object in loadedFixture) {
+        async.each(loadedFixture, function (object, objectCallback) {
             var sql = 'INSERT INTO ' + fixture + ' SET ?';
 
+            // Temp object that will hold our insertion
+            var temp = {};
+
             // Remove keys that are an object and have .persist = false set
-            for (var key in loadedFixture[object]) {
-                if (typeof loadedFixture[object][key] === 'object' && loadedFixture[object][key].persist === false) {
-                    delete loadedFixture[object][key];
+            for (var key in object) {
+                if (typeof object[key] !== 'object' && object[key].persist !== false) {
+                    temp[key] = object[key];
                 }
             }
 
             // Execute the query
             db.query({
                 sql: sql,
-                values: loadedFixture[object],
-                callback: fixtureCallback
+                values: temp
+            }).then(function (data) {
+                return objectCallback(null, data);
+            }).catch(function (err) {
+                return objectCallback(err);
             });
-        }
+        }, function(err) {
+            if (err) {
+                return fixtureCallback(err);
+            }
+
+            return fixtureCallback();
+        });
     }, function (err) {
         if (err) {
             return callback(err);
@@ -85,9 +97,10 @@ Fixtures.prototype.clear = function (callback) {
         // console.log(sql);
 
         db.query({
-            sql: sql,
-            callback: fileCallback
-        });
+            sql: sql
+        }).then(function(data) {
+            return fileCallback(null, data);
+        }).catch(fileCallback);
     }, function (err) {
         if (err) {
             return callback(err);
