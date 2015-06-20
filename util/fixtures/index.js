@@ -62,7 +62,7 @@ Fixtures.prototype.load = function (params, callback) {
             }).catch(function (err) {
                 return objectCallback(err);
             });
-        }, function(err) {
+        }, function (err) {
             if (err) {
                 return fixtureCallback(err);
             }
@@ -98,7 +98,7 @@ Fixtures.prototype.clear = function (callback) {
 
         db.query({
             sql: sql
-        }).then(function(data) {
+        }).then(function (data) {
             return fileCallback(null, data);
         }).catch(fileCallback);
     }, function (err) {
