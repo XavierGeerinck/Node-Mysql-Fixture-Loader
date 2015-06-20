@@ -43,6 +43,14 @@ Fixtures.prototype.load = function (params, callback) {
         for (var object in loadedFixture) {
             var sql = 'INSERT INTO ' + fixture + ' SET ?';
 
+            // Remove keys that are an object and have .persist = false set
+            for (var key in loadedFixture[object]) {
+                if (typeof loadedFixture[object][key] === 'object' && loadedFixture[object][key].persist === false) {
+                    delete loadedFixture[object][key];
+                }
+            }
+
+            // Execute the query
             db.query({
                 sql: sql,
                 values: loadedFixture[object],
