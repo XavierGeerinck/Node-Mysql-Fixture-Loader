@@ -39,40 +39,13 @@ Fixtures.prototype.load = function (params, callback) {
         var loadedFixture = self.fixtures[fixture];
 
         // Insert all the elements, we construct an INSERT INTO based on the keys and the values
-        // INSERT INTO user (email, password) VALUES (?, ?, ?)
+        // INSERT INT {table} SET ?
         for (var object in loadedFixture) {
-            var sql = '';
-
-            var values = [];
-
-            // Formulate SQL
-            sql += 'INSERT INTO ' + fixture + ' (' + Object.keys(loadedFixture[object]).join(', ') + ')';
-
-            // Remove the last ,
-            sql = sql.substring(0, sql.length - 1);
-
-            sql += ') VALUES (';
-
-            // Add value binding
-            for (var key in Object.keys(loadedFixture[object])) {
-                sql += '?, ';
-            }
-
-            // Remove the last ,
-            sql = sql.substring(0, sql.length - 2);
-
-            sql += ');';
-
-            // Push Values
-            for (var column in loadedFixture[object]) {
-                values.push(loadedFixture[object][column]);
-            }
-
-            // console.log(sql);
+            var sql = 'INSERT INTO ' + fixture + ' SET ?';
 
             db.query({
                 sql: sql,
-                values: values,
+                values: loadedFixture[object],
                 callback: fixtureCallback
             });
         }
