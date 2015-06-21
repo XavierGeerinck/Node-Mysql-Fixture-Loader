@@ -39,7 +39,7 @@ Fixtures.prototype.load = function (params, callback) {
         var loadedFixture = self.fixtures[fixture];
 
         // Insert all the elements, we construct an INSERT INTO based on the keys and the values
-        // INSERT INT {table} SET ?
+        // INSERT INTO {table} SET ?
         async.each(loadedFixture, function (object, objectCallback) {
             var sql = 'INSERT INTO ' + fixture + ' SET ?';
 
